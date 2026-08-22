@@ -43,7 +43,9 @@
           board = "nice_nano_v2";
           shield = "eyelash_corne_%PART%";
 
-          zephyrDepsHash = "sha256-F03oJNHWmHlpFc1JHyvqX02WL+Pg6ZcNWpCaiDfJANA=";
+          zephyrDepsHash = "sha256-wcKnf3vz/VN4hi1Lzp0bdNc8xRniikcGP33O5eTtDIE=";
+
+          enableZmkStudio = false;
 
           meta = {
             description = "ZMK firmware";
