@@ -43,7 +43,7 @@
           board = "nice_nano_v2";
           shield = "eyelash_corne_%PART%";
 
-          zephyrDepsHash = "sha256-wcKnf3vz/VN4hi1Lzp0bdNc8xRniikcGP33O5eTtDIE=";
+          zephyrDepsHash = "sha256-pGA26rJBYqZFChg72h/CVbm4hrnpzoqXPxK7Bk0uOhQ=";
 
           enableZmkStudio = false;
 
