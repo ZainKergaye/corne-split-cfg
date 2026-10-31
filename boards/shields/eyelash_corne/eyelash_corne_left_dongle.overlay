@@ -1,0 +1,11 @@
+/*
+ * Left half for use with the external dongle. The dongle is central, so this
+ * half deliberately does not select ZMK_SPLIT_ROLE_CENTRAL.
+ */
+
+#include "eyelash_corne.dtsi"
+#include <behaviors/battery_history_request.dtsi>
+
+&left_encoder {
+    status = "okay";
+};
