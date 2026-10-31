@@ -22,23 +22,25 @@
       packages = forAllSystems (system: rec {
         default = firmware;
 
+        sourceFiles = lib.sourceFilesBySuffices self [
+          ".board"
+          ".cmake"
+          ".conf"
+          ".defconfig"
+          ".dts"
+          ".dtsi"
+          ".json"
+          ".keymap"
+          ".overlay"
+          ".shield"
+          ".yml"
+          "_defconfig"
+        ];
+
         firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
           name = "firmware";
 
-          src = lib.sourceFilesBySuffices self [
-            ".board"
-            ".cmake"
-            ".conf"
-            ".defconfig"
-            ".dts"
-            ".dtsi"
-            ".json"
-            ".keymap"
-            ".overlay"
-            ".shield"
-            ".yml"
-            "_defconfig"
-          ];
+          src = sourceFiles;
 
           board = "nice_nano_v2";
           shield = "eyelash_corne_%PART%";
@@ -52,6 +54,25 @@
             license = lib.licenses.mit;
             platforms = lib.platforms.all;
           };
+        };
+
+        dongle = zmk-nix.legacyPackages.${system}.buildKeyboard {
+          name = "eyelash-corne-dongle";
+          src = sourceFiles;
+          board = "nice_nano_v2";
+          shield = "eyelash_corne_dongle";
+          zephyrDepsHash = "sha256-pGA26rJBYqZFChg72h/CVbm4hrnpzoqXPxK7Bk0uOhQ=";
+          enableZmkStudio = false;
+        };
+
+        dongle-halves = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
+          name = "eyelash-corne-dongle-halves";
+          src = sourceFiles;
+          board = "nice_nano_v2";
+          shield = "eyelash_corne_%PART%";
+          parts = [ "left_dongle" "right" ];
+          zephyrDepsHash = "sha256-pGA26rJBYqZFChg72h/CVbm4hrnpzoqXPxK7Bk0uOhQ=";
+          enableZmkStudio = false;
         };
 
         flash = zmk-nix.packages.${system}.flash.override { inherit firmware; };
