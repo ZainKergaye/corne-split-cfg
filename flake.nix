@@ -19,10 +19,11 @@
       forAllSystems = lib.genAttrs (nixpkgs.lib.attrNames zmk-nix.packages);
     in
     {
-      packages = forAllSystems (system: rec {
-        default = firmware;
-
+      packages = forAllSystems (system:
+      let
         sourceFiles = lib.sourceFilesBySuffices self [
+          ".c"
+          ".h"
           ".board"
           ".cmake"
           ".conf"
@@ -35,7 +36,11 @@
           ".shield"
           ".yml"
           "_defconfig"
+          "CMakeLists.txt"
         ];
+      in
+      rec {
+        default = firmware;
 
         firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
           name = "firmware";
@@ -57,10 +62,10 @@
         };
 
         dongle = zmk-nix.legacyPackages.${system}.buildKeyboard {
-          name = "eyelash-corne-dongle";
+          name = "pandakb-corne-dongle";
           src = sourceFiles;
           board = "nice_nano_v2";
-          shield = "eyelash_corne_dongle";
+          shield = "Corne_dongle_central eyeslash_dongle_config dongle_display";
           zephyrDepsHash = "sha256-pGA26rJBYqZFChg72h/CVbm4hrnpzoqXPxK7Bk0uOhQ=";
           enableZmkStudio = false;
         };
